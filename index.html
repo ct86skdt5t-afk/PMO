@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ledgerlane — Koszty projektów</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root{--ink:#17354b;--muted:#6c8495;--line:#dcebf3;--paper:#fff;--bg:#f2f9fd;--lime:#aee8fa;--lime-deep:#80d6ef;--nav:#153c56}
+    .sidebar{color:#eaf7fc}.nav-link{color:#b6d5e3}.nav-link:hover,.nav-link.active{background:#245875}.sidebar-bottom .user{border-color:#33637d}.user small{color:#a8c9d9}.brand-mark{color:#17405a}.primary{color:#17354b}.secondary{background:#e8f5fa;color:#26536b}.post{background:#216080}.text-button{color:#2a7699}.bar-bg,.progress{background:#e6f3f8}.bar,.progress i{background:#78d2ee}.attention-row{background:#f4fbfe}.feature-list{color:#426b81}.upload-zone{border-color:#a8d6e7;background:#f5fbfe}.upload-zone button{background:#dff4fb;color:#1d6382}.switch input:checked+i{background:#6ccbe7}dialog{box-shadow:0 25px 80px #17405a44}dialog::backdrop{background:#153c5688}
+    .login-screen{position:fixed;z-index:100;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,#e6f7fd,#cdeefa);padding:20px}.login-screen.hidden{display:none}.login-card{width:min(410px,100%);padding:36px;background:#fff;border:1px solid #cde7f1;border-radius:16px;box-shadow:0 24px 70px #39759028}.login-brand{padding:0 0 28px;display:flex}.login-card h1{font-size:25px;margin-bottom:8px}.login-card>p:not(.eyebrow){color:#648090;font-size:13px;margin:0 0 22px}.login-card label{display:block;font-size:11px;font-weight:700;color:#456379;margin:14px 0}.login-card input{display:block;width:100%;border:1px solid #cfe4ee;border-radius:7px;padding:11px;margin-top:6px;font:13px Manrope}.login-card .primary{width:100%;margin:9px 0 16px}.login-card small{color:#7893a3;font-size:10px}.login-error{min-height:16px;color:#bc4141;font-size:11px;margin:5px 0}.user-admin{margin-top:18px}.security-note{color:#718a9a;font-size:11px;margin:17px 0 0}.role{font:600 10px 'DM Mono';padding:5px 7px;border-radius:5px}.role.admin{background:#dff4fb;color:#206887}.role.user{background:#edf3f6;color:#526f80}
+  </style>
+  <style>.logout-button{width:100%;margin-top:12px;padding:9px 12px;border:1px solid #3e6a82;border-radius:7px;background:transparent;color:#c9e4ee;text-align:left;font:600 11px Manrope;cursor:pointer}.logout-button:hover{background:#245875;color:#fff}.delete-project{display:block;margin-top:16px;border:0;background:transparent;color:#9a4a4a;padding:0;font:600 11px Manrope;cursor:pointer}.delete-project:hover{color:#bf3535;text-decoration:underline}</style>
+  <style>
+    :root{--ink:#17293b;--muted:#65788b;--line:#dceaf0;--bg:#f5fbfd;--lime:#22a8e0;--lime-deep:#138cc6;--nav:#1e2d40}
+    .sidebar{background:#1e2d40}.nav-link:hover,.nav-link.active{background:#293e55}.primary{color:white}.primary:hover{background:#138cc6}.brand.lux-brand{display:block;padding:0 16px 35px;color:#20a9e4;font-size:20px;letter-spacing:-1px}.brand.lux-brand small{display:block;margin-top:4px;color:#9db3c4;font:500 8px 'DM Mono';letter-spacing:1px}.login-brand.lux-brand{padding:0 0 28px}.login-brand.lux-brand small{color:#688193}.bar,.progress i{background:#20a9e4}.text-button{color:#158cc2}.post{background:#1e2d40}.post:hover{background:#293e55}.lux-footer{margin-left:248px;background:#1e2d40;color:#c6d5df;min-height:76px;padding:25px 43px;display:flex;align-items:center;justify-content:space-between;font-size:11px}.lux-footer span:last-child{color:#7f9aab}@media(max-width:900px){.lux-footer{margin-left:64px;padding:22px 25px}}@media(max-width:600px){.lux-footer{margin-left:64px;padding:18px 12px;display:grid;gap:5px;font-size:9px}}
+  </style>
+</head>
+<body>
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card"><a class="brand login-brand lux-brand" href="#"><span>LuxPools</span><small>FINANSE PROJEKTÓW</small></a><p class="eyebrow">BEZPIECZNY DOSTĘP</p><h1>Witaj ponownie</h1><p>Zaloguj się, aby zarządzać kosztami projektów.</p><form id="loginForm"><label>Adres e-mail<input id="loginEmail" type="email" value="admin@ledgerlane.local" required></label><label>Hasło<input id="loginPassword" type="password" value="admin123" required></label><p id="loginError" class="login-error"></p><button class="primary" type="submit">Zaloguj się</button></form><small>Demo administratora: admin@ledgerlane.local / admin123</small></div>
+  </div>
+  <aside class="sidebar">
+    <a class="brand lux-brand" href="#"><span>LuxPools</span><small>FINANSE PROJEKTÓW</small></a>
+    <nav>
+      <button class="nav-link active" data-view="dashboard"><span>◈</span> Przegląd</button>
+      <button class="nav-link" data-view="invoices"><span>▤</span> Faktury <b id="invoiceCount">0</b></button>
+      <button class="nav-link" data-view="projects"><span>⌘</span> Projekty</button>
+      <button class="nav-link" data-view="reports"><span>◔</span> Raporty</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-link" data-view="settings"><span>⚙</span> Centrum administracyjne</button>
+      <div class="user"><div class="avatar">SA</div><div><strong>Samir Ahmed</strong><small>Administrator</small></div><span>⌄</span></div>
+      <button class="logout-button" id="logoutButton">↪ Wyloguj</button>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div><p class="eyebrow" id="crumb">PRZESTRZEŃ ROBOCZA / PRZEGLĄD</p><h1 id="pageTitle">Dzień dobry, Samir.</h1></div>
+      <div class="header-actions"><button class="icon-btn" aria-label="powiadomienia">◌</button><button class="primary" id="scanButton">＋ Skanuj fakturę</button></div>
+    </header>
+
+    <section id="dashboard" class="view active">
+      <div class="stat-grid">
+        <article class="stat"><span class="stat-icon amber">↗</span><p>Wydatki w tym miesiącu</p><h2 id="monthSpend">€0.00</h2><small id="monthSpendSub">Brak zarejestrowanych kosztów</small></article>
+        <article class="stat"><span class="stat-icon blue">▤</span><p>Faktury do weryfikacji</p><h2 id="pendingCount">0</h2><small>Sprawdź dane OCR przed księgowaniem</small></article>
+        <article class="stat"><span class="stat-icon green">⌘</span><p>Aktywne projekty</p><h2 id="activeProjects">0</h2><small>We wszystkich centrach kosztów</small></article>
+        <article class="stat"><span class="stat-icon purple">◎</span><p>Wykorzystanie budżetu</p><h2 id="budgetUsed">0%</h2><small id="budgetSub">€0 z €0 przydzielono</small></article>
+      </div>
+      <div class="content-grid two-one">
+        <article class="panel"><div class="panel-head"><div><h3>Wydatki projektowe</h3><p>Bieżący miesiąc według centrum kosztów</p></div><button class="text-button" data-view="reports">Zobacz raport →</button></div><div id="spendChart" class="spend-chart empty-state">Dodaj projekt i zaksięguj fakturę, aby zobaczyć podział kosztów.</div></article>
+        <article class="panel"><div class="panel-head"><div><h3>Wymaga uwagi</h3><p>Faktury do sprawdzenia</p></div><button class="text-button" data-view="invoices">Zobacz wszystkie →</button></div><div id="attentionList" class="attention empty-state">Nie masz faktur do weryfikacji.</div></article>
+      </div>
+      <article class="panel recent"><div class="panel-head"><div><h3>Ostatnie faktury</h3><p>Najnowsza aktywność we wszystkich projektach</p></div><button class="text-button" data-view="invoices">Rejestr faktur →</button></div><div class="table-wrap"><table><thead><tr><th>FAKTURA</th><th>PROJEKT / CENTRUM KOSZTÓW</th><th>DATA</th><th>KWOTA</th><th>STATUS</th></tr></thead><tbody id="recentInvoices"></tbody></table></div></article>
+    </section>
+
+    <section id="invoices" class="view">
+      <div class="toolbar"><div class="segmented"><button class="selected" data-filter="all">Wszystkie</button><button data-filter="review">Do weryfikacji</button><button data-filter="posted">Zaksięgowane</button></div><div class="search"><span>⌕</span><input id="invoiceSearch" placeholder="Szukaj dostawcy lub nr faktury" /></div></div>
+      <article class="panel"><div class="table-wrap"><table><thead><tr><th>FAKTURA</th><th>DOSTAWCA</th><th>PROJEKT / CENTRUM KOSZTÓW</th><th>DATA</th><th>KWOTA</th><th>STATUS</th><th></th></tr></thead><tbody id="invoiceTable"></tbody></table></div></article>
+    </section>
+
+    <section id="projects" class="view"><div class="section-action"><div><h2>Projekty i centra kosztów</h2><p>Ustaw budżety i przypisuj koszty do właściwych działań.</p></div><button class="primary" id="newProject">＋ Nowy projekt</button></div><div id="projectCards" class="project-grid"></div></section>
+
+    <section id="reports" class="view"><div class="section-action"><div><h2>Raportowanie kosztów</h2><p>Bieżące wartości z zaksięgowanych faktur.</p></div><button class="secondary" id="exportCsv">↓ Eksportuj CSV</button></div><div class="report-grid"><article class="panel"><div class="panel-head"><div><h3>Budżet a wykonanie</h3><p>Zaksięgowane koszty we wszystkich projektach</p></div></div><div id="budgetReport" class="budget-report"></div></article><article class="panel"><h3>Podsumowanie kosztów</h3><dl class="summary" id="costSummary"></dl></article></div></section>
+
+    <section id="settings" class="view"><div class="section-action"><div><h2>Centrum administracyjne</h2><p>Zarządzaj działaniem swojej przestrzeni finansowej.</p></div></div><div class="admin-grid"><article class="panel"><h3>Ustawienia przestrzeni</h3><p>Konfiguruj akceptacje, integracje finansowe, waluty i dostęp użytkowników wraz z rozwojem zespołu.</p><div class="setting-row"><span><b>Weryfikacja przed księgowaniem</b><small>Wymagaj akceptacji danych OCR</small></span><label class="switch"><input type="checkbox" checked><i></i></label></div><div class="setting-row"><span><b>Domyślna waluta</b><small>Używana dla nowych faktur</small></span><select id="currency"><option value="PLN" selected>PLN (zł)</option><option value="EUR">EUR (€)</option><option value="USD">USD ($)</option><option value="GBP">GBP (£)</option></select></div></article><article class="panel"><h3>Gotowe na rozwój</h3><p class="muted">MVP rozdziela dane, widoki i procesy, więc można dodać:</p><ul class="feature-list"><li>Role akceptacyjne i historię audytu</li><li>Dopasowanie zamówień i katalog dostawców</li><li>Integracje z systemami księgowymi</li><li>Wiele walut i reguły podatkowe</li><li>Automatyczne raporty cykliczne</li></ul></article></div><article class="panel user-admin"><div class="panel-head"><div><h3>Użytkownicy i dostęp</h3><p>Administratorzy zarządzają ustawieniami; użytkownicy pracują z fakturami.</p></div><button class="primary" id="newUser">＋ Dodaj użytkownika</button></div><div class="table-wrap"><table><thead><tr><th>UŻYTKOWNIK</th><th>E-MAIL</th><th>ROLA</th><th>STATUS</th></tr></thead><tbody id="userTable"></tbody></table></div><p class="security-note">Wersja lokalna przechowuje konta wyłącznie w tej przeglądarce. Do rzeczywistej ochrony haseł użyj serwera, szyfrowania i bazy danych.</p></article></section>
+  </main>
+  <footer class="lux-footer"><span>© 2026 LuxPools. Wszelkie prawa zastrzeżone.</span><span>Luxury pools, decking & aquatic excellence.</span></footer>
+
+  <dialog id="invoiceModal"><form id="invoiceForm" method="dialog"><div class="modal-head"><div><p class="eyebrow">DODAWANIE FAKTURY</p><h2>Sprawdź fakturę</h2></div><button class="close" value="cancel">×</button></div><div class="upload-zone" id="dropZone"><input id="fileInput" type="file" accept="image/*,.pdf" hidden><button type="button" id="chooseFile">↑ Wybierz plik faktury</button><span id="fileLabel">PNG, JPG lub PDF — OCR działa w przeglądarce</span></div><p id="ocrStatus" class="ocr-status"></p><div class="form-grid"><label>Numer faktury<input name="number" placeholder="np. FV/1042" required></label><label>Data faktury<input name="date" type="date" required></label><label>Dostawca<input name="supplier" placeholder="Nazwa dostawcy" required></label><label>Kwota<input name="amount" type="number" min="0" step="0.01" placeholder="0.00" required></label><label class="full">Projekt / centrum kosztów<select name="project" id="projectSelect" required></select></label></div><div class="modal-footer"><button class="secondary" value="cancel">Anuluj</button><button class="primary" id="saveInvoice" value="default">Zapisz do weryfikacji</button><button type="button" class="post" id="postInvoice">Zaksięguj koszt</button></div></form></dialog>
+  <dialog id="projectModal"><form id="projectForm" method="dialog"><div class="modal-head"><div><p class="eyebrow">NOWE CENTRUM KOSZTÓW</p><h2>Utwórz projekt</h2></div><button class="close" value="cancel">×</button></div><div class="form-grid"><label>Nazwa projektu<input name="name" required placeholder="np. Wdrożenie Northstar"></label><label>Kod centrum kosztów<input name="code" required placeholder="np. CC-2001"></label><label class="full">Budżet<input name="budget" type="number" min="0" step="100" required placeholder="np. 50000"></label></div><div class="modal-footer"><button class="secondary" value="cancel">Anuluj</button><button class="primary" value="default">Utwórz projekt</button></div></form></dialog>
+  <dialog id="userModal"><form id="userForm" method="dialog"><div class="modal-head"><div><p class="eyebrow">NOWE KONTO</p><h2>Dodaj użytkownika</h2></div><button class="close" value="cancel">×</button></div><div class="form-grid"><label>Imię i nazwisko<input name="name" required placeholder="np. Anna Kowalska"></label><label>Adres e-mail<input name="email" type="email" required placeholder="anna@firma.pl"></label><label>Hasło tymczasowe<input name="password" type="password" minlength="6" required placeholder="co najmniej 6 znaków"></label><label>Rola<select name="role"><option value="user">Użytkownik</option><option value="admin">Administrator</option></select></label></div><div class="modal-footer"><button class="secondary" value="cancel">Anuluj</button><button class="primary" value="default">Dodaj użytkownika</button></div></form></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script><script src="app.js"></script>
+</body>
+</html>
